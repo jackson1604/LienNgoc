@@ -1,0 +1,161 @@
+﻿<Window x:Class="LienNgoc.PresentationLayer.NhanVienWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:LienNgoc.PresentationLayer"
+        Title="Liên Ngọc | Quản Lý Nhân Viên"
+        Height="800"
+        Width="1280"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Icon="Resources/Images/icon.ico">
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="BooleanConverter" />
+        <local:NhomToVisibilityConverter x:Key="NhomConveter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.04*" />
+            <RowDefinition Height="0.09*" />
+            <RowDefinition Height="0.08*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.09*" />
+        </Grid.RowDefinitions>
+
+        <Menu>
+            <MenuItem x:Name="MenuItem_NhanVien_HoSo"
+                      Header="Hồ Sơ">
+                <MenuItem x:Name="MenuItem_NhanVien_ChucNang_Thoat"
+                          Header="Thoát"
+                          HorizontalAlignment="Left" />
+            </MenuItem>
+            <MenuItem x:Name="MenuItem_NhanVien_ChucNang"
+                      Header="Chức Năng">
+                <MenuItem x:Name="MenuItem_NhanVien_ChucNang_PhucHoiMatKhau"
+                          Header="Phục hồi mật khẩu"
+                          HorizontalAlignment="Left" />
+                <MenuItem x:Name="MenuItem_NhanVien_ChucNang_InDanhSachNhanVien"
+                          Header="In danh sách nhân viên"
+                          HorizontalAlignment="Left" />
+            </MenuItem>
+        </Menu>
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Image Width="50"
+                   Source="Resources/Images/009.png"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,10,0" />
+            <TextBlock TextWrapping="Wrap"
+                       Text="Quaûn Lyù Nhaân Vieân"
+                       Grid.Row="1"
+                       FontFamily="VNI-Swiss-Condense"
+                       FontSize="40"
+                       Foreground="Red"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,30,10">
+            <Image Width="30"
+                   Source="Resources/Images/057.png"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+            <TextBox x:Name="TextBox_NhanVien_SearchNhanVien"
+                     Height="30"
+                     Width="250"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Margin="5,0,0,0"
+                     FontSize="14"
+                     VerticalContentAlignment="Center" />
+        </StackPanel>
+        <DataGrid x:Name="DataGrid_NhanVien"
+                  AutoGenerateColumns="False"
+                  Grid.Row="3"
+                  RowEditEnding="DataGrid_NhanVien_RowEditEnding"
+                  FontSize="13">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding MaNhanVien}"
+                                    Header="Mã Nhân Viên" />
+                <DataGridTextColumn Binding="{Binding TenDangNhap}"
+                                    Header="Tên Đăng Nhập" />
+                <DataGridTextColumn Binding="{Binding TenNhanVien}"
+                                    Header="Tên Nhân Viên" />
+                <DataGridTextColumn Binding="{Binding NgaySinh}"
+                                    Header="Ngày Sinh" />
+                <DataGridTextColumn Binding="{Binding GioiTinh, Converter={StaticResource BooleanConverter}}"
+                                    Header="Giới Tính"
+                                    IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding DienThoai}"
+                                    Header="Điện Thoại" />
+                <DataGridTextColumn Binding="{Binding DiaChi}"
+                                    Header="Địa Chỉ" />
+                <DataGridTextColumn Binding="{Binding NgayTao}"
+                                    Header="Ngày Tạo" />
+                <DataGridTextColumn Binding="{Binding LanDNCuoi}"
+                                    Header="Lần Đăng Nhập Cuối" />
+                <DataGridTextColumn Binding="{Binding LanDoiMKCuoi}"
+                                    Header="Lần Đổi Mật Khẩu Cuối" />
+                <DataGridCheckBoxColumn Binding="{Binding BiKhoa}"
+                                        Header="Bị Khóa?"
+                                        IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding MaNhom, Converter={StaticResource NhomConveter}}"
+                                    Header="Nhóm" />
+                <DataGridCheckBoxColumn Header="Xóa" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.RowSpan="2"
+                    Orientation="Horizontal"
+                    Grid.Row="4"
+                    HorizontalAlignment="Center">
+            <Button x:Name="Button_NhanVien_Them"
+                    Width="110"
+                    Height="40"
+                    Margin="0,0,10,0"
+                    Click="Button_NhanVien_Them_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Resources/Images/026.png"
+                           Width="30" />
+                    <TextBlock FontSize="15"
+                               VerticalAlignment="Center"
+                               Text="Thêm" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Button_NhanVien_CapNhat"
+                    Width="110"
+                    Height="40"
+                    Margin="0"
+                    Click="Button_NhanVien_CapNhat_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Resources/Images/027.png"
+                           Width="30" />
+                    <TextBlock FontSize="15"
+                               VerticalAlignment="Center"
+                               Text="Cập nhật" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Button_NhanVien_Xoa"
+                    Width="110"
+                    Height="40"
+                    Margin="10,0,0,0"
+                    Click="Button_NhanVien_Xoa_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Resources/Images/028.png"
+                           Width="30" />
+                    <TextBlock FontSize="15"
+                               VerticalAlignment="Center"
+                               Text="Xóa" />
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

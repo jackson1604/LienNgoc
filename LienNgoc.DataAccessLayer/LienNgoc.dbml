@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="LIEN_NGOC" Class="LienNgocDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=LIEN_NGOC;Integrated Security=True" SettingsObjectName="LienNgoc.DataAccessLayer.Properties.Settings" SettingsPropertyName="LIEN_NGOCConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DonViTinh" Member="DonViTinhs">
+    <Type Name="DonViTinh">
+      <Column Name="MaDonViTinh" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenDonViTinh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="DonViTinh_Thuoc" Member="Thuocs" ThisKey="MaDonViTinh" OtherKey="MaDonViTinh" Type="Thuoc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Thuoc" Member="Thuocs">
+    <Type Name="Thuoc">
+      <Column Name="MaThuoc" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenThuoc" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TenVietTat" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CongDung" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NgaySanXuat" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaDonViTinh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DonGia" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaLoaiThuoc" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="Thuoc_HangNhap" Member="HangNhaps" ThisKey="MaThuoc" OtherKey="MaThuoc" Type="HangNhap" />
+      <Association Name="Thuoc_HoaDonChiTiet" Member="HoaDonChiTiets" ThisKey="MaThuoc" OtherKey="MaThuoc" Type="HoaDonChiTiet" />
+      <Association Name="DonViTinh_Thuoc" Member="DonViTinh" ThisKey="MaDonViTinh" OtherKey="MaDonViTinh" Type="DonViTinh" IsForeignKey="true" />
+      <Association Name="LoaiThuoc_Thuoc" Member="LoaiThuoc" ThisKey="MaLoaiThuoc" OtherKey="MaLoaiThuoc" Type="LoaiThuoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HangNhap" Member="HangNhaps">
+    <Type Name="HangNhap">
+      <Column Name="MaHangNhap" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SoPhieuNhap" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaThuoc" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Thuoc_HangNhap" Member="Thuoc" ThisKey="MaThuoc" OtherKey="MaThuoc" Type="Thuoc" IsForeignKey="true" />
+      <Association Name="PhieuNhap_HangNhap" Member="PhieuNhap" ThisKey="SoPhieuNhap" OtherKey="SoPhieuNhap" Type="PhieuNhap" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HoaDon" Member="HoaDons">
+    <Type Name="HoaDon">
+      <Column Name="MaHoaDon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaNhanVien" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayBan" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TongThanhTien" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="HoaDon_HoaDonChiTiet" Member="HoaDonChiTiets" ThisKey="MaHoaDon" OtherKey="MaHoaDon" Type="HoaDonChiTiet" />
+      <Association Name="NhanVien_HoaDon" Member="NhanVien" ThisKey="MaNhanVien" OtherKey="MaNhanVien" Type="NhanVien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HoaDonChiTiet" Member="HoaDonChiTiets">
+    <Type Name="HoaDonChiTiet">
+      <Column Name="MaHoaDon" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaThuoc" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="HoaDon_HoaDonChiTiet" Member="HoaDon" ThisKey="MaHoaDon" OtherKey="MaHoaDon" Type="HoaDon" IsForeignKey="true" />
+      <Association Name="Thuoc_HoaDonChiTiet" Member="Thuoc" ThisKey="MaThuoc" OtherKey="MaThuoc" Type="Thuoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoaiThuoc" Member="LoaiThuocs">
+    <Type Name="LoaiThuoc">
+      <Column Name="MaLoaiThuoc" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenLoai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DacDiem" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="LoaiThuoc_Thuoc" Member="Thuocs" ThisKey="MaLoaiThuoc" OtherKey="MaLoaiThuoc" Type="Thuoc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NhanVien" Member="NhanViens">
+    <Type Name="NhanVien">
+      <Column Name="MaNhanVien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenDangNhap" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="TenNhanVien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MatKhau" Type="System.String" DbType="NVarChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="GioiTinh" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="NgayTao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LanDNCuoi" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LanDoiMKCuoi" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BiKhoa" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="NhanVien_HoaDon" Member="HoaDons" ThisKey="MaNhanVien" OtherKey="MaNhanVien" Type="HoaDon" />
+      <Association Name="NhanVien_PhieuNhap" Member="PhieuNhaps" ThisKey="MaNhanVien" OtherKey="MaNhanVien" Type="PhieuNhap" />
+      <Association Name="Nhom_NhanVien" Member="Nhom" ThisKey="MaNhom" OtherKey="MaNhom" Type="Nhom" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Nhom" Member="Nhoms">
+    <Type Name="Nhom">
+      <Column Name="MaNhom" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Nhom_NhanVien" Member="NhanViens" ThisKey="MaNhom" OtherKey="MaNhom" Type="NhanVien" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhieuNhap" Member="PhieuNhaps">
+    <Type Name="PhieuNhap">
+      <Column Name="SoPhieuNhap" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NgayNhap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaNhanVien" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LyDoNhap" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PhieuNhap_HangNhap" Member="HangNhaps" ThisKey="SoPhieuNhap" OtherKey="SoPhieuNhap" Type="HangNhap" />
+      <Association Name="NhanVien_PhieuNhap" Member="NhanVien" ThisKey="MaNhanVien" OtherKey="MaNhanVien" Type="NhanVien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.usp_LienNgoc_NhanVien_CheckLogin" Method="usp_LienNgoc_NhanVien_CheckLogin">
+    <Parameter Name="TenDangNhap" Parameter="tenDangNhap" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="MatKhau" Parameter="matKhau" Type="System.String" DbType="NVarChar(32)" />
+    <Parameter Name="Result" Parameter="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_LienNgoc_NhanVien_InsertNhanVien" Method="usp_LienNgoc_NhanVien_InsertNhanVien">
+    <Parameter Name="TenDangNhap" Parameter="tenDangNhap" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="TenNhanVien" Parameter="tenNhanVien" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MatKhau" Parameter="matKhau" Type="System.String" DbType="NVarChar(32)" />
+    <Parameter Name="NgaySinh" Parameter="ngaySinh" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="GioiTinh" Parameter="gioiTinh" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="DienThoai" Parameter="dienThoai" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="DiaChi" Parameter="diaChi" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="NgayTao" Parameter="ngayTao" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="LanDNCuoi" Parameter="lanDNCuoi" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="LanDoiMKCuoi" Parameter="lanDoiMKCuoi" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="BiKhoa" Parameter="biKhoa" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="MaNhom" Parameter="maNhom" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_LienNgoc_NhanVien_GetAllNhanVien" Method="usp_LienNgoc_NhanVien_GetAllNhanVien" />
+</Database>
